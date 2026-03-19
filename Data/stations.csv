@@ -1,0 +1,59 @@
+station_tbl_id,station_id,project_id,latitude,longitude,site_location,site_comments
+848,BLT14,BLT,53.1041,-119.212,Off-trail. Area: near Whitehorn Cabin in very dense forest. Habitat type: Forest. Elevation: 1125m. Height: 125cm. Bearing: N.,Strap. Deployed 15-07-2023 18:27. Stay along the river.
+849,BLT15,BLT,53.1062,-119.214,On-trail- Phase 2. Area: BLT. Habitat type: Forest. Elevation: 1145m. Height: 145cm. Bearing: SW.,Python lock. Deployed 15-07-2023.
+861,BLT27,BLT,53.1547,-119.152,Off-trail. Area: shore of Berg Lake. Habitat type: Bog. Elevation: 1643m. Height: 79cm. Bearing: NE.,Strap. Deployed 12-07-2023 18:59.
+874,BLT42,BLT,53.1384,-119.065,On-trail- Phase 3. Area: Snowbird Pass Trail by river crossing. Habitat type: meadow. Elevation: 2203m. Height: 48cm. Bearing: SE.,Alpine stand. Deployed 13-07-2023 15:10. 
+852,BLT18,BLT,53.1398,-119.197,"Off-trail. Area: cliff base, scree slope with sparse shrub and tree cover. Habitat type: Talus slope. Elevation: 1790m. Height: 125cm. Bearing: NW.",Strap. Deployed 14-07-2023 15:40. Tough climb up scree slope.
+840,BLT05,BLT,53.0716,-119.188,"Off-trail. Area: steep slope. Habitat type: Talus slope. Elevation: 1115m. Height: 79cm. Bearing: S.
+","Strap. Deployed 11-07-2023 14:30.
+Very steep slope, lots and lots of deadfall - go slow"
+844,BLT09,BLT,53.0909,-119.194,Off-trail. Area: forested area with avalanche paths near Kinney. Habitat type: Forest. Elevation: 1065m. Height: 107cm. Bearing: NW.,Strap. Deployed 11-07-2023 12:35.
+863,BLT29,BLT,53.1667,-119.163,On-trail- Phase 3. Area: The cave trail. Habitat type: Forest. Elevation: 2085m. Height: 48cm. Bearing: S.,Python. Deployed 12-07-2023 17:45.
+856,BLT22,BLT,53.1435,-119.17,On-trail- Phase 3. Area: BLT near Berg Lake. Habitat type: Forest. Elevation: 1647m. Height: 122cm. Bearing: NW.,"Python. Deployed 14-07-2023 15:15. 
+july 2025: Silver screws changed to black "
+851,BLT17,BLT,53.119,-119.209,"On-trail- Phase 3. Area: BLT, Valley of a Thousand Falls. Habitat type: Forest. Elevation: 1287m. Height: 107cm. Bearing: .","Python. Deployed 15-07-2023 14:35. Check bearing.
+July 2025: Silver screws changed to black "
+845,BLT10,BLT,53.0939,-119.207,On-trail- Phase 2. Area: BLT trail near Kinney Flats. Habitat type: Forest. Elevation: 1012m. Height: 97cm. Bearing: N.,"Python. Deployed 16-07-2023 11:54.
+July 2025: added lock box"
+1072,BLT14B,BLT,53.1042,-119.212,"Moved on trail May 31, 2025",JUly 2025: added lock box 
+842,BLT07,BLT,53.0806,-119.181,On-trail - Phase 1. Area: BLT near Kinney lake. Habitat type: Forest. Elevation: 1000m. Height: 200cm. Bearing: ,"Python. Deployed 11-07-2023 14:10. Check bearing next time.
+- July 2025: screws are in pretty tight. Time gap b/t camera stopped & turn on for check. Lock box added"
+841,BLT06,BLT,53.0738,-119.181,Off-trail. Area: Forest off of Kinney campground. Habitat type: Forest. Elevation: 987m. Height: 81cm. Bearing: N.,"Strap. Deployed 11-07-2023 16:26. .Take a right off trail from washroom, walk up the river a little bit. Has some extra images from another site that can be deleted. "
+838,BLT03,BLT,53.064,-119.204,"On-trail- Phase 1. Area: BLT, very busy. Habitat type: Forest. Elevation: 938m. Height: 100cm. Bearing: SE.","Lockbox. Deployed 11-07-2023 11:00.
+July 2025: replaced silver screws with black ones "
+846,BLT12,BLT,53.0974,-119.217,Off-trail. Area: game trail in forest above Kinney Flats. Habitat type: Forest. Elevation: 1095m. Height: 150cm. Bearing: N.,Strap. Deployed 16-07-23 10:35.
+853,BLT19,BLT,53.1335,-119.206,On-trail- Phase 3. Area: trail-game trail intersection near Emperor Falls. Habitat type: Forest. Elevation: 1582m. Height: 109cm. Bearing: E.,Python. Deployed 14-07-2023 13:11. A lot of deadfall in this section of the trail.
+843,BLT08,BLT,53.0886,-119.189,Off-trail. Area: game trail in forested area up a steep slope near stream above Kinney Lake. Habitat type: Forest. Elevation: 1066m. Height: 48cm. Bearing: .,"Strap. Deployed 11-07-2023 15:05. Check bearing next time.
+July 2025: time 1 hour behind; no python lock "
+866,BLT32,BLT,53.1762,-119.151,Off-trail. Area:alpine off Mumm Basin. Habitat type: Meadow. Elevation: 2208m. Height: alpine stand. Bearing: NE.,Alpine stand. Deployed 12-07-2023 18:55.
+869,BLT35,BLT,53.1561,-119.117,"Off-trail. Area: Snowbird Pass, N side of the river and trail. Habitat type: Meadow. Elevation: 1685m. Height: 58cm. Bearing: N.",Alpine stand. Deployed 13-07-2023 10:54.
+871,BLT37,BLT,53.1463,-119.097,Off-trail. Area: Snowbird Pass Trail. Habitat type: alpine. Elevation: 1926m. Height: 76cm. Bearing: NW.,"Strap. Deployed 13-07-2023 14:57. May need to move east if cam is covered by snow too long. too steep and close to glacier, only 40m from human trail."
+858,BLT24,BLT,53.161,-119.175,Off-trail. Area: boulder field meadow area near hargreaves lake loop trail. Habitat type: Meadow. Elevation: 2074m. Height:79cm. Bearing: NW.,Strap. Deployed 14-07-2023 14:23. 
+862,BLT28,BLT,53.1628,-119.159,On-trail - Phase 3. Area: Toboggan Falls. Habitat type: Forest. Elevation: 1962m. Height: 76cm. Bearing: NW.,Strap. Deployed 12-07-2023 18:50.
+872,BLT38,BLT,53.1483,-119.095,Off-trail. Area: base of cliff band above Snowbird Pass Trail. Habitat type: alpine. Elevation: 2056m. Height: 47cm. Bearing: SW.,Alpine stand. Deployed 13-07-2023 12:00.
+873,BLT40,BLT,53.1348,-119.085,"On-trail - Phase 3. Area: Snowbird Pass trail intersection of game trail, human trail, and potential large animal bed in subalpine meadow. Habitat type: meadow. Elevation: 2082m. Height: 57cm. Bearing: S.",Alpine stand. Deployed 13-07-2023 1:40.
+837,BLT02,BLT,53.0622,-119.212,Off-trail. Area: old cedar forest with devils club. Dispersed game trails. Habitat type: Forest. Elevation: 980m. Height: 66cm. Bearing: N.,"Strap. Deployed 11-07-2023 11:51. 
+Avoid travelling avalanche chute."
+880,BLT44,BLT,53.1448,-119.051,On-trail. Area: top of Snowbird Pass. Habitat type: alpine. Elevation: 2432m. Height: 58cm. Bearing: S.,"Alpine stand, with ARU02. 13-07-2023 16:33."
+854,BLT20,BLT,53.1376,-119.192,On-trail- Phase 3. Area: BLT.  Habitat type: open riparian trees and rocky scree slope. Elevation: 1644m. Height: 142cm. Bearing: NW.,Python. Deployed 14-07-2023 11:58. 
+850,BLT16,BLT,53.1099,-119.215,Off-trail. Area: behind Whitehorn Ranger Cabin. Habitat type: Forest. Elevation: 1144m. Height: 51cm. Bearing: .,"Strap. Deployed 15-07-2023 19:53. Check bearing next time. 
+July 2025: lock box added"
+847,BLT13,BLT,53.1005,-119.215,On-trail- Phase 2. Area: old trail past Kinney Flats Habitat type: Forest. Elevation: 1084m. Height: 135cm. Bearing: W.,Python. Deployed 15-07-2023 18:26.
+855,BLT21,BLT,53.1372,-119.179,On-trail- Phase 3. Area: flats near Berg Lake. Habitat type: Bog. Elevation: 1658m. Height: 76cm. Bearing: NE.,Python. Deployed 14-07-2023 11:31. Attached to driftwood.
+857,BLT23,BLT,53.1506,-119.175,On-trail - Phase 3. Area: Hargreaves Lake Loop. Habitat type: Forest. Elevation: 1897m. Height: 159cm. Bearing: N.,Python. Deployed 14-07-2023 12:44.
+860,BLT26,BLT,53.1579,-119.159,On-trail- Phase 3. Area: Toboggan Falls. Habitat type: Forest. Elevation: 1764m. Height: 145cm. Bearing: N.,Python. Deployed 12-07-2023 19:45.
+864,BLT30,BLT,53.1653,-119.144,Off-trail. Area: near Mumm Basin Trail/Robson Pass. Habitat type: Forest. Elevation: 1827m. Height: 36cm. Bearing: S.,Strap. Deployed 14-07-2023 12:10.
+867,BLT33,BLT,53.1587,-119.127,On-trail- Phase 3. Area: Snowbird Pass Trail near river. Habitat type: open floodplain. Elevation: 1671m. Height: 69cm. Bearing: N.,"Strap. Deployed 13-07-2023 9:18,"
+870,BLT36,BLT,53.1515,-119.108,On-trail- Phase 3. Area: Snowbird Pass trail. Habitat type: alpine glacial. Elevation: 1728m. Height: 61cm. Bearing: S.,Alpine stand. Deployed 13-07-2023 12:00. Facing glacier.
+875,BLT43,BLT,53.1352,-119.067,Off-trail. Area: Snowbird Pass Trail near meadow with strong goat trail. Habitat type: alpine. Elevation: 2182m. Height: 56cm. Bearing: NE.,Alpine stand. Deployed 13-07-2023.
+877,BLT45,BLT,53.1466,-119.066,Off-trail. Area: alpine area off of Snowbird Pass trail with goat trail and pellets. Habitat type: alpine. Elevation: 2419m. Height: 46cm. Bearing: NE.,Alpine stand. 13-07-2023 13:00. Long hike up hill.
+865,BLT31,BLT,53.1574,-119.149,On-trail - Phase 3. Area: near Berg Lake. Habitat type: Forest. Elevation: 1642m. Height: 139cm. Bearing: N.,"Python. Deployed 12-07-2023 17:47.
+July 2025: silver screws changed to black "
+859,BLT25,BLT,53.1522,-119.16,On-trail- Phase 3. Area: BLT next to Berg Lake. Habitat type: Forest. Elevation:1656m. Height: 86cm. Bearing: NW.,"Python. Deployed 14-07-2023 16:15.
+July 2025: Silver screws changed to black"
+836,BLT01,BLT,53.0525,-119.214,On-trail- Phase 1. Area: near BLT trailhead. Habitat type: Forest. Elevation: 856m. Height: 56cm. Bearing: W.,"Lockbox + Python. Deployed 11-07-2023 9:42.
+July 2025: silver screws changed to black "
+839,BLT04,BLT,53.0665,-119.192,"On-trail- Phase 1. Area: BLT KM 3, near river. Habitat type: Forest. Elevation: 975m. Height: 200cm. Bearing: N.","Python. Deployed 11-07-2023 12:00.
+July 2025: Lock box added"
+868,BLT34,BLT,53.166,-119.129,On-trail - Phase 3. Area: Robson Pass. Habitat type: Meadow/Forest. Elevation: 1646m. Height: 142cm. Bearing: N.,"Python. Deployed 12-07-2023 16:57. Deployed with ARU01.
+July 2025: silver screws changed to black ones"
