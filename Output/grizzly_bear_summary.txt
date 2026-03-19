@@ -1,0 +1,41 @@
+ Family: negbinomial 
+  Links: mu = log; shape = identity 
+Formula: Bear_Detections ~ prox_trail_scaled * rec_week_scaled + elevation_scaled + mean_ndvi_scaled + offset(log_effort) + (1 | Deployment.Location.ID) 
+         autocor ~ arma(time = week_id, gr = Deployment.Location.ID, p = 1, q = 0, cov = FALSE)
+   Data: data_fit (Number of observations: 2071) 
+  Draws: 4 chains, each with iter = 10000; warmup = 4000; thin = 1;
+         total post-warmup draws = 24000
+
+Correlation Structures:
+      Estimate Est.Error l-95% CI u-95% CI Rhat Bulk_ESS Tail_ESS
+ar[1]     0.28      0.51    -0.87     0.97 1.00     6848    11088
+sderr     0.44      0.26     0.02     0.96 1.00     3494     7818
+
+Multilevel Hyperparameters:
+~Deployment.Location.ID (Number of levels: 43) 
+              Estimate Est.Error l-95% CI u-95% CI Rhat Bulk_ESS Tail_ESS
+sd(Intercept)     1.22      0.28     0.75     1.86 1.00     9273    13828
+
+Regression Coefficients:
+                                  Estimate Est.Error l-95% CI u-95% CI
+Intercept                            -7.51      0.74    -9.10    -6.24
+prox_trail_scaled                     3.22      1.01     1.49     5.40
+rec_week_scaled                       0.24      0.78    -1.44     1.61
+elevation_scaled                      0.02      0.32    -0.61     0.66
+mean_ndvi_scaled                     -0.30      0.14    -0.57    -0.03
+prox_trail_scaled:rec_week_scaled    -0.22      1.13    -2.19     2.22
+                                  Rhat Bulk_ESS Tail_ESS
+Intercept                         1.00    15218    16014
+prox_trail_scaled                 1.00    18536    16559
+rec_week_scaled                   1.00    17883    13579
+elevation_scaled                  1.00    14036    17600
+mean_ndvi_scaled                  1.00    37868    20399
+prox_trail_scaled:rec_week_scaled 1.00    18100    14210
+
+Further Distributional Parameters:
+      Estimate Est.Error l-95% CI u-95% CI Rhat Bulk_ESS Tail_ESS
+shape     1.83      1.09     0.55     4.66 1.00    13606    17053
+
+Draws were sampled using sampling(NUTS). For each parameter, Bulk_ESS
+and Tail_ESS are effective sample size measures, and Rhat is the potential
+scale reduction factor on split chains (at convergence, Rhat = 1).
