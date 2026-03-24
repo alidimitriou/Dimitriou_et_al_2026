@@ -26,13 +26,15 @@ Coauthor 4
 Name: Dr. A. Cole Burton
 		Institution: Department of Forest Resources Management, University of British Columbia, Vancouver, British Columbia, Canada
 		
-3. Dates of Data Collection July 2023-June 2025
+3. Dates of Data Collection July 11, 2023-June 2025
 
 4. Geographic location of data collection: Mount Robson Park, British Columbia, Canada
 
 5. Funding sources that supported the collection of the data: BC Parks; The Government of British Columbia; The British Columbia Chapter of the Wildlife Society; Natural Sciences and Engineering Council of Canada; University of British Columbia
 
-6. Recommended citation for this dataset: Dimitriou et al. (2026). Data from: Sharing the Trail: the effect of recreation on bear behaviour in a partially closed Rocky Mountain Park, Zenodo, Dataset
+6. Recommended citation for this dataset: 
+
+Dimitriou et al. (2026). Data from: Sharing the Trail: the effect of recreation on bear behaviour in a partially closed Rocky Mountain Park, Zenodo, Dataset
 
 # Description
 

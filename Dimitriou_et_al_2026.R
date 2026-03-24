@@ -8,6 +8,257 @@
 # ===============================================================
 getwd()
 #setwd("~/Desktop/Dimitriou_et_al_2026")
+
+# ---------------------------------------------------------------
+# ANALYSIS 1.0 — Libraries
+# ---------------------------------------------------------------
+library(dplyr)
+library(brms)
+library(posterior)
+library(tidyr)
+library(ggplot2)
+library(ggcorrplot)
+library(car)
+library(performance)
+
+# ---------------------------------------------------------------
+# ANALYSIS 1.1 — Load prepared data + output folder
+# ---------------------------------------------------------------
+bear_model_data <- read.csv("Data/combined_bear_model_data.csv") %>%
+  filter(is.finite(Effort), Effort > 0) %>%
+  mutate(
+    log_effort = log(Effort),
+    Species_Label = case_when(
+      Species == "Ursus americanus" ~ "Black bear",
+      Species == "Ursus arctos"     ~ "Grizzly bear",
+      TRUE ~ Species
+    )
+  ) %>%
+  drop_na(log_effort)
+
+output_dir <- "Output"
+if (!dir.exists(output_dir)) dir.create(output_dir, recursive = TRUE)
+
+
+# ---------------------------------------------------------------
+# ANALYSIS 1.2 — Build covariates (proximity + recreation)
+# ---------------------------------------------------------------
+#lambda_m <- 500
+
+#bear_model_data <- bear_model_data %>%
+#  mutate(
+    # distance
+#    prox_trail        = exp(-dist_trail / lambda_m),
+#    prox_trail_scaled = as.numeric(scale(prox_trail)),
+    
+    # recreation
+#    rec_week_log      = log1p(rec_week),
+#    rec_week_scaled   = as.numeric(scale(rec_week_log))
+# )
+
+
+#bear_model_data <- bear_model_data %>%
+#  mutate(
+#    prox_trail_scaled = as.numeric(scale(prox_trail)),
+#    rec_week_log      = log1p(rec_week),
+#    rec_week_scaled   = as.numeric(scale(rec_week_log))
+#  )
+
+#add scaled variables to csv
+#write.csv(bear_model_data, "Data/combined_bear_model_data.csv", row.names = FALSE)
+
+# ---------------------------------------------------------------
+# ANALYSIS 1.3 — Multicollinearity checks
+# ---------------------------------------------------------------
+lm_vif_interact <- lm(
+  Bear_Detections ~ prox_trail_scaled + rec_week_scaled +
+    mean_ndvi_scaled + elevation_scaled,
+  data = bear_model_data %>%
+    drop_na(Bear_Detections, prox_trail_scaled, rec_week_scaled,
+            mean_ndvi_scaled, elevation_scaled)
+)
+
+print(car::vif(lm_vif_interact))
+print(performance::check_collinearity(lm_vif_interact))
+
+X <- bear_model_data %>%
+  select(prox_trail_scaled, rec_week_scaled, mean_ndvi_scaled, elevation_scaled) %>%
+  drop_na()
+
+cor_mat <- cor(X, method = "pearson")
+print(round(cor_mat, 2))
+ggcorrplot(cor_mat, hc.order = TRUE, type = "lower", lab = TRUE)
+
+# ---------------------------------------------------------------
+# ANALYSIS 1.4 — Independence threshold sensitivity check
+# ---------------------------------------------------------------
+detections <- read.csv("Data/BLT_detection_data.csv")
+
+thresholds <- c(5, 10, 15, 20, 30, 45, 60)
+
+results <- lapply(thresholds, function(t) {
+  detections %>%
+    filter(Species == "Ursus americanus") %>%
+    arrange(Deployment.Location.ID, Date_Time.Captured) %>%
+    group_by(Deployment.Location.ID) %>%
+    mutate(
+      Time_Diff = as.numeric(difftime(Date_Time.Captured, lag(Date_Time.Captured), units = "mins")),
+      Event_ID = cumsum(is.na(Time_Diff) | Time_Diff > t)
+    ) %>%
+    group_by(Deployment.Location.ID, Event_ID) %>%
+    slice_min(Date_Time.Captured, n = 1) %>%
+    ungroup() %>%
+    summarise(
+      Threshold = t,
+      Total_Events = n()
+    )
+}) %>%
+  bind_rows()
+
+print(results)
+
+results <- results %>%
+  arrange(Threshold) %>%
+  mutate(
+    Prev = lag(Total_Events),
+    Delta = Total_Events - Prev,
+    Pct_Change = 100 * (Delta / Prev)
+  )
+
+ggplot(results, aes(x = Threshold, y = Total_Events)) +
+  geom_line(linewidth = 1) +
+  geom_point(size = 3) +
+  geom_vline(xintercept = 30, linetype = "dashed") +
+  labs(x = "Independence threshold (minutes)", y = "Total independent events",
+       title = "Event count vs. independence threshold") +
+  theme_classic(base_size = 14)
+
+# ---------------------------------------------------------------
+# ANALYSIS 1.5 — Fit weekly habitat-use model
+# ---------------------------------------------------------------
+run_bear_model <- function(df, species_name) {
+  cat("\nRunning model for:", species_name, "\n")
+  
+  data_fit <- df %>%
+    mutate(week_start = as.Date(Week_Start)) %>%   # correct column
+    drop_na(
+      Bear_Detections,
+      prox_trail_scaled,
+      rec_week_scaled,
+      elevation_scaled,
+      mean_ndvi_scaled,
+      log_effort,
+      Deployment.Location.ID,
+      Week_Start
+    ) %>%
+    arrange(Deployment.Location.ID, week_start) %>%
+    group_by(Deployment.Location.ID) %>%
+    mutate(week_id = row_number()) %>%
+    ungroup()
+  
+  
+  map_df <- data_fit %>%
+    mutate(.row_fit = row_number()) %>%
+    select(.row_fit, Deployment.Location.ID, week_start, Week_Label, week_id)
+  
+  model <- brm(
+    formula = Bear_Detections ~
+      prox_trail_scaled * rec_week_scaled +
+      elevation_scaled + mean_ndvi_scaled +
+      offset(log_effort) + (1 | Deployment.Location.ID),
+    autocor = cor_ar(~ week_id | Deployment.Location.ID, p = 1),
+    data = data_fit,
+    family = negbinomial(),
+    prior = c(
+      prior(normal(0, 2), class = "b"),
+      prior(normal(0, 10), class = "Intercept"),
+      prior(cauchy(0, 2), class = "sd"),
+      prior(exponential(1), class = "shape")
+    ),
+    chains = 4, iter = 10000, warmup = 4000, seed = 123,
+    control = list(adapt_delta = 0.98, max_treedepth = 12)
+  )
+  
+  post <- as_draws_df(model)
+  
+  base_labels <- c(
+    "b_prox_trail_scaled"                 = "Proximity to trail",
+    "b_rec_week_scaled"                   = "Recreation Intensity",
+    "b_prox_trail_scaled:rec_week_scaled" = "Trail × Recreation",
+    "b_mean_ndvi_scaled"                  = "NDVI",
+    "b_elevation_scaled"                  = "Elevation"
+  )
+  
+  effect_df <- post %>%
+    select(any_of(names(base_labels))) %>%
+    pivot_longer(everything(), names_to = "Variable", values_to = "Estimate") %>%
+    group_by(Variable) %>%
+    summarise(
+      median  = median(Estimate),
+      lower95 = quantile(Estimate, 0.025),
+      upper95 = quantile(Estimate, 0.975),
+      lower80 = quantile(Estimate, 0.10),
+      upper80 = quantile(Estimate, 0.90),
+      .groups = "drop"
+    ) %>%
+    mutate(
+      Species  = species_name,
+      Term_raw = Variable,
+      Term     = dplyr::recode(Variable, !!!base_labels, .default = Variable)
+    )
+  
+  
+  fname_stub <- gsub(" ", "_", tolower(species_name))
+  saveRDS(model,  file.path(output_dir, paste0(fname_stub, "_model.rds")))
+  saveRDS(map_df, file.path(output_dir, paste0(fname_stub, "_model_data_map.rds")))
+  capture.output(summary(model), file = file.path(output_dir, paste0(fname_stub, "_summary.txt")))
+  
+  list(model = model, effects = effect_df, var_labels = base_labels)
+}
+
+# ---------------------------------------------------------------
+# ANALYSIS 1.6 — Fit models (Black bear, Grizzly bear)
+# ---------------------------------------------------------------
+
+brms_black <- run_bear_model(
+  bear_model_data %>% filter(Species == "Ursus americanus"),
+  "Black bear"
+)
+
+brms_grizzly <- run_bear_model(
+  bear_model_data %>% filter(Species == "Ursus arctos"),
+  "Grizzly bear"
+)
+
+
+
+# ---------------------------------------------------------------
+# ANALYSIS 1.7 — Combine posterior effects + export
+# ---------------------------------------------------------------
+effects_all <- bind_rows(
+  brms_black$effects,
+  brms_grizzly$effects
+) %>%
+  select(Species, Term, Term_raw, median, lower95, upper95, lower80, upper80)
+
+write.csv(effects_all, file.path(output_dir, "posterior_effects_both_species.csv"), row.names = FALSE)
+
+# ---------------------------------------------------------------
+# ANALYSIS 1.8 — Reload posterior effects (from CSV)
+# ---------------------------------------------------------------
+effects_all <- read.csv(
+  file.path(output_dir, "posterior_effects_both_species.csv"),
+  stringsAsFactors = FALSE
+)
+
+effects_all <- effects_all %>%
+  mutate(
+    Species = factor(Species, levels = c("Black bear", "Grizzly bear"))
+  )
+
+# ---------------------------------------------------------------
+# ANALYSIS 1.9 — Plot posterior effects (combined species)
+# ---------------------------------------------------------------
 effects_all <- effects_all %>%
   mutate(
     Term = dplyr::recode(
@@ -37,7 +288,7 @@ plot_df <- effects_all %>%
 plt_combined <- ggplot(plot_df, aes(y = y, color = Species)) +
   geom_segment(aes(x = lower80, xend = upper80, yend = y), linewidth = 3) +
   geom_segment(aes(x = lower95, xend = upper95, yend = y), linewidth = 1.2) +
-  geom_point(aes(x = median, shape = Species), size = 4.5) +
+  geom_point(aes(x = median, shape = Species), size = 6) +
   geom_vline(xintercept = 0, linetype = "dashed", color = "blue", linewidth = 1) +
   scale_y_continuous(breaks = seq_along(level_order), labels = level_order) +
   scale_color_manual(values = c("Black bear" = "#1b9e77",
@@ -328,9 +579,7 @@ print(moran_summary)
 
 
 # ===============================================================
-# ANALYSIS 2: Diel activity patterns (solar time)
-#   Bears vs Humans; Open vs Closed trails
-#   fitact() + compareCkern() + overlapEst()
+# ANALYSIS 2: Diel activity patterns 
 # ===============================================================
 
 # ---------------------------------------------------------------
@@ -351,9 +600,8 @@ suppressPackageStartupMessages({
 setwd("/Volumes/ALI'S USB/DIEL_ACTIVITY") #  too large for local computer
 base_dir <- getwd()
 
-cov        <- read.csv(file.path(base_dir, "processed_data", "BLT_covariates.csv"))
 model_data <- read.csv(file.path(base_dir, "processed_data",
-                                 "combined_bear_model_data_with_trail_status.csv"))
+                                 "combined_bear_model_data.csv"))
 img        <- read.csv(file.path(base_dir, "raw_data", "BLT_detection_data.csv"))
 locs       <- read.csv(file.path(base_dir, "raw_data", "BLT_station_data.csv"))
 
@@ -641,9 +889,6 @@ write.csv(species_overlap_df,
           row.names = FALSE)
 
 # ---------------------------------------------------------------
-# 2.12) Plot overlap coefficients + CIs
-# ---------------------------------------------------------------
-# ---------------------------------------------------------------
 # 2.12) Plot overlap coefficients + CIs (Open vs Closed; includes species overlap)
 #   - Uses:
 #       diel_output/bear_diel_overlap.csv  (human–bear overlap)
@@ -701,12 +946,16 @@ plot_df <- bind_rows(
 plot_df <- plot_df %>%
   mutate(
     x_cat = case_when(
-      x_cat == "Grizzly" ~ "Grizzly bear",
-      TRUE              ~ x_cat
+      x_cat == "Black bear"       ~ "Black bear–Human",
+      x_cat == "Grizzly bear"     ~ "Grizzly bear–Human",
+      x_cat == "Species Overlap"  ~ "Black bear–Grizzly bear",
+      TRUE ~ x_cat
     ),
     x_cat  = factor(
       x_cat,
-      levels = c("Black bear", "Grizzly bear", "Species Overlap")
+      levels = c("Black bear–Human",
+                 "Grizzly bear–Human",
+                 "Black bear–Grizzly bear")
     ),
     status = factor(status, levels = c("Open", "Closed"))
   )
@@ -756,8 +1005,8 @@ library(scales)
 # =============================================================
 # 3.2 Define trail status
 # =============================================================
-trail_status_df <- read.csv(
-  "Data/combined_bear_model_data_with_trail_status.csv"
+bear_model_data <- read.csv(
+  "Data/combined_bear_model_data.csv"
 ) %>%
   select(Deployment.Location.ID, Week_Label, trail_status) %>%
   distinct()
@@ -785,9 +1034,9 @@ detections <- read.csv(
       (Date_Time.Captured >= ymd("2024-05-01") & Date_Time.Captured <= ymd("2024-10-30")) |
       (Date_Time.Captured >= ymd("2025-04-30") & Date_Time.Captured <= ymd("2025-06-24"))
   ) %>%
-  # keep only weeks present in trail_status_df and join status
-  filter(Week_Label %in% trail_status_df$Week_Label) %>%
-  left_join(trail_status_df, by = c("Deployment.Location.ID", "Week_Label"))
+  # keep only weeks present in bear_model_data and join status
+  filter(Week_Label %in%bear_model_data$Week_Label) %>%
+  left_join(bear_model_data, by = c("Deployment.Location.ID", "Week_Label"))
 
 # Check coverage
 cat("Detection date range:\n")
@@ -1548,7 +1797,7 @@ trail_status_df <- tibble(
 # ------------------------------------------------------------------
 # Weekly detections -> total detections per 100 trap-days
 # ------------------------------------------------------------------
-detect <- read.csv("Data/combined_bear_model_data_with_trail_status.csv") %>%
+bear_model_data <- read.csv("Data/combined_bear_model_data.csv") %>%
   rename(station_id = Deployment.Location.ID) %>%
   mutate(
     station_id = as.character(trimws(station_id)),
@@ -1556,7 +1805,7 @@ detect <- read.csv("Data/combined_bear_model_data_with_trail_status.csv") %>%
   ) %>%
   filter(Species %in% c("Ursus americanus", "Ursus arctos"))
 
-bear_rate <- detect %>%
+bear_rate <- bear_model_data %>%
   group_by(station_id, Species) %>%
   summarise(
     total_detections = sum(Bear_Detections, na.rm = TRUE),
