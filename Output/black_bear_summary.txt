@@ -8,33 +8,26 @@ Formula: Bear_Detections ~ prox_trail_scaled * rec_week_scaled + elevation_scale
 
 Correlation Structures:
       Estimate Est.Error l-95% CI u-95% CI Rhat Bulk_ESS Tail_ESS
-ar[1]     0.73      0.21     0.27     0.99 1.00     6536     5360
-sderr     0.61      0.15     0.30     0.88 1.00     3035     1855
+ar[1]     0.73      0.20     0.29     0.99 1.00     9237    10263
+sderr     0.61      0.14     0.34     0.88 1.00     5186     5178
 
 Multilevel Hyperparameters:
 ~Deployment.Location.ID (Number of levels: 43) 
               Estimate Est.Error l-95% CI u-95% CI Rhat Bulk_ESS Tail_ESS
-sd(Intercept)     1.73      0.33     1.20     2.48 1.00     5692     9100
+sd(Intercept)     1.73      0.33     1.21     2.47 1.00     6641    10830
 
 Regression Coefficients:
-                                  Estimate Est.Error l-95% CI u-95% CI
-Intercept                            -6.17      0.42    -7.06    -5.42
-prox_trail_scaled                     0.29      0.35    -0.40     0.99
-rec_week_scaled                       0.69      0.22     0.25     1.11
-elevation_scaled                     -0.48      0.37    -1.27     0.20
-mean_ndvi_scaled                      0.53      0.13     0.29     0.79
-prox_trail_scaled:rec_week_scaled    -0.10      0.29    -0.64     0.52
-                                  Rhat Bulk_ESS Tail_ESS
-Intercept                         1.00     6236    10103
-prox_trail_scaled                 1.00     7914    12292
-rec_week_scaled                   1.00    13774    13792
-elevation_scaled                  1.00     7336    11688
-mean_ndvi_scaled                  1.00    15533    16054
-prox_trail_scaled:rec_week_scaled 1.00    14838    15434
+                                  Estimate Est.Error l-95% CI u-95% CI Rhat Bulk_ESS Tail_ESS
+Intercept                            -6.17      0.43    -7.08    -5.42 1.00     6691    11696
+prox_trail_scaled                     0.29      0.35    -0.41     1.00 1.00     9404    13486
+rec_week_scaled                       0.70      0.22     0.25     1.11 1.00    15831    16433
+elevation_scaled                     -0.49      0.38    -1.29     0.20 1.00     6968    11925
+mean_ndvi_scaled                      0.53      0.13     0.29     0.79 1.00    19643    18713
+prox_trail_scaled:rec_week_scaled    -0.10      0.30    -0.65     0.51 1.00    16411    16505
 
 Further Distributional Parameters:
       Estimate Est.Error l-95% CI u-95% CI Rhat Bulk_ESS Tail_ESS
-shape     3.55      1.47     1.42     7.10 1.00     8001     6523
+shape     3.59      1.49     1.45     7.20 1.00    12624    11295
 
 Draws were sampled using sampling(NUTS). For each parameter, Bulk_ESS
 and Tail_ESS are effective sample size measures, and Rhat is the potential
