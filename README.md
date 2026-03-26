@@ -41,8 +41,8 @@ Dimitriou et al. (2026). Data from: Sharing the Trail: the effect of recreation 
 
 # Data files
 - combined_bear_model_data.csv : weekly independent detections of bear species and predictor variables for the habitat use models
-- stations.csv (AVAILABLE AT REQUEST)
-- BLT_detection_data.csv : raw detections of species (incl humans) by camera trap station
+- stations.csv: geographical data for camera trap stations (AVAILABLE AT REQUEST)
+- BLT_detection_data_urs_hom.csv : raw detections of bears and humans by camera trap station
 - BLT_30min_Independent.csv : independent detections of species by camera station in Mount Robson Park 
 - Full_BLT_Trail.gpkg : GIS file of trail features
 
@@ -79,7 +79,7 @@ site_location: notes on specific camera trap location including reopening phase,
 site_comments: deployment date and method.
 
 
-## DATA-SPECIFIC INFORMATION FOR: BLT_detection_data.csv
+## DATA-SPECIFIC INFORMATION FOR: BLT_detection_data_urs_hom.csv
 Project.ID: BLT = Berg Lake Trail Camera Trap Project
 Image.ID: image file name, structure as "Deployment.Location.ID__YYYY_MM_DD__HH_MM_SS.jpg"
 Blank: TRUE = no animal detected by MegaDetector, FALSE = animal detected by Megadetector
