@@ -92,7 +92,7 @@ ggcorrplot(cor_mat, hc.order = TRUE, type = "lower", lab = TRUE)
 # ---------------------------------------------------------------
 # ANALYSIS 1.4 — Independence threshold sensitivity check
 # ---------------------------------------------------------------
-detections <- read.csv("Data/BLT_detection_data.csv")
+detections <- read.csv("Data/BLT_detection_data_urs_hom.csv")
 
 thresholds <- c(5, 10, 15, 20, 30, 45, 60)
 
@@ -602,7 +602,7 @@ base_dir <- getwd()
 
 model_data <- read.csv(file.path(base_dir, "processed_data",
                                  "combined_bear_model_data.csv"))
-img        <- read.csv(file.path(base_dir, "raw_data", "BLT_detection_data.csv"))
+img        <- read.csv(file.path(base_dir, "raw_data", "BLT_detection_data_urs_hom.csv"))
 locs       <- read.csv(file.path(base_dir, "raw_data", "BLT_station_data.csv"))
 
 # Output folder
@@ -1015,7 +1015,7 @@ bear_model_data <- read.csv(
 # 3.3 Load detection data (date-range filter replaces Month filter)
 # =============================================================
 detections <- read.csv(
-  "Data/BLT_detection_data.csv",
+  "Data/BLT_detection_data_urs_hom.csv",
   stringsAsFactors = FALSE
 ) %>%
   mutate(
@@ -1543,7 +1543,7 @@ library(tibble)
 # 0) Load data
 # -------------------------------------------------
 obs <- read.csv("Data/BLT_30min_Independent.csv")
-detections <- read.csv("Data/BLT_detection_data.csv", stringsAsFactors = FALSE)
+detections <- read.csv("Data/BLT_detection_data_urs_hom.csv", stringsAsFactors = FALSE)
 
 # -------------------------------------------------
 # 1) Bears (already 30‑min independent in `obs`)
