@@ -35,7 +35,7 @@ Institution: Department of Forest Resources Management, University of British Co
 
 6. Recommended citation for this dataset: 
 
-Dimitriou et al. (2026). Data from: Sharing the Trail: the effect of recreation on bear behaviour in a partially closed Rocky Mountain Park, Zenodo, Dataset
+Dimitriou et al. (2026). Data from: Sharing the Trail: the effect of recreation on bear behaviour in a Canadian Rocky Mountain Park, Zenodo, Dataset
 
 # Description
 
