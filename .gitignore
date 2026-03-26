@@ -10,5 +10,5 @@ BLT_detection_data.csv
 stations.csv
 
 # Ignore output folders
-outputs/
-additional_figures/
+Outputs/
+Additional_Figures/
