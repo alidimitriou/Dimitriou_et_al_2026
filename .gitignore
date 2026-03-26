@@ -1,4 +1,14 @@
-.Rproj.user
+
+# RStudio files
+.Rproj.user/
 .Rhistory
 .RData
 .Ruserdata
+
+# Ignore specific large CSVs
+BLT_detection_data.csv
+stations.csv
+
+# Ignore output folders
+outputs/
+additional_figures/
