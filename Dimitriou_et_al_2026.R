@@ -1,6 +1,6 @@
 # R Code for:
 # Dimitriou, A., Benson-Amram, S., Gaynor, K. M., Percy, M., Burton, A. C. (2026). 
-# Sharing the Trail: the effect of recreation on bear behaviour in a partially closed 
+# Sharing the Trail: recreation effects on bear behaviour in a partially closed 
 # Rocky Mountain Park. Journal of Wildlife Management.
 
 # ===============================================================
